@@ -1,9 +1,10 @@
 import { RequestHandler } from "express"
 import { Ads } from "../model/adsmodel"
+import { User } from "../model/usermodel"
 const dat:string[]=['youssef','mohamed','fathi','abdallah' ]
 
 export const ad:RequestHandler=async (req,res,next)=>{
-  const ad=await Ads.create(req.body)
+  const ad=await User.create(req.body)
   
 }
 export const getAll:RequestHandler=(req,res,next)=>{

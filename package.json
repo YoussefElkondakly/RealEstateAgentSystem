@@ -4,7 +4,7 @@
   "description": "This is A simple nodeJs Server built on Type script and dealing with mongoose and Pg at the same time ",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon  dist/fs.js",
+    "test": "nodemon  dist/dummu.js",
     "start": "nodemon dist/server.js"
   },
   "author": "Youssef Elkondakly",
