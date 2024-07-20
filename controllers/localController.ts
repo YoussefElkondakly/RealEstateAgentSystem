@@ -4,6 +4,7 @@ const dat:string[]=['youssef','mohamed','fathi','abdallah' ]
 
 export const ad:RequestHandler=async (req,res,next)=>{
   const ad=await Ads.create(req.body)
+  
 }
 export const getAll:RequestHandler=(req,res,next)=>{
 const data= dat

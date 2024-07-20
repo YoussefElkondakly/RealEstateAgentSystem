@@ -1,7 +1,8 @@
 import app from "./app";
 import { config } from "dotenv";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import { Sequelize } from "sequelize-typescript";
+import { Ads } from "./model/adsmodel";
 
 config()
 
@@ -25,7 +26,7 @@ module.exports=sequelize
 
  */
 //here will implement the nested connection  with data Bases
-
+console.log(__dirname + "/model/adsmodel.js");
 const pgP = process.env.PG_PASSWORD||'';
 const postgres =
   typeof process.env.DB_POSTGRES === "string"
@@ -33,22 +34,28 @@ const postgres =
     : '';
 
 // const mongoP = process.env.MONGO_PASSWORD;
-const mongo = process.env.DB_MONGO||''
+// const mongo = process.env.DB_MONGO||''
 const port = process.env.PORT || 3000;
 const sequelize = new Sequelize(postgres);
-sequelize.addModels([__dirname + "/model/adsmodel.js"]);
+sequelize.addModels([Ads]);
+//postgres:<PASSWORD>@localhost:5432/typescript
+//  const sequelize = new Sequelize({
+//    database: "typescript",
+//    dialect: "postgres",
+//    username: "postgres",
+//    password: "password",
+//    host: "localhost",
+//    port: 5432,
+
+//    models: [Ads],
+//  });
 // console.log(__dirname)
 /**
- * 
+ *  
  */
-mongoose.connect(mongo).then((co) => {
-  console.log(
-    "Connected Successfully to " + co.connections[0].name + " Mongo Database\n"
-  );
-  return sequelize.sync(
-
-    {force:true}
-)}).then(()=>{
+ sequelize.sync(
+// {force:true}
+).then(()=>{
     console.log('PostGres DB connection successful\n')
     app.listen(port, () => {
       console.log("Server is running on port " + port);

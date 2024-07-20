@@ -5,14 +5,16 @@ import { Table, Column, Model, IsFloat } from "sequelize-typescript";
 @Table
 export class Ads extends Model {
   @Column
-  title?: string;
+  title!: string;
 
   @IsFloat
   @Column
-  price?: number;
+  price!: number;
   
   @Column
-  area?: string;
+  area!: string;
  
 
 }
+
+
