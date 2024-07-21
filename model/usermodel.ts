@@ -74,7 +74,7 @@ import { RequestAd } from './requestModel';
      type: DataType.BOOLEAN,
      defaultValue: false,
    })
-   verified!: string;
+   verified!: boolean;
    @Column({
      type: DataType.BOOLEAN,
      defaultValue: true,
@@ -84,25 +84,31 @@ import { RequestAd } from './requestModel';
    @Column({
      type: DataType.DATE,
    })
-   passwordChangedAt!: string;
+   passwordChangedAt!: string | null;
    @AllowNull(true)
-   @Column
-   passwordResetToken!: string;
+   @Column({
+     type: DataType.STRING,
+   })
+   passwordResetToken!: string | null;
    @AllowNull(true)
    @Column({
      type: DataType.DATE,
    })
-   passwordResetExpires!: string;
+   passwordResetExpires!: string | null;
    @AllowNull(true)
-   @Column
-   verifyUserToken!: string;
+   @Column({
+     type: DataType.STRING,
+   })
+   verifyUserToken!: string | null;
 
-   checkChangedPassword(jwtIat: number) {
-     if (this.passwordChangedAt) {
+   checkChangedPassword(jwtIat: number,passwordChangedAt:string|null) {
+   console.log(passwordChangedAt);
+     if (passwordChangedAt) {
        const passwordChangedAtTimeStamp: number = new Date(
-         this.passwordChangedAt
-       ).getTime();
-       const changedPasswordTime: number = passwordChangedAtTimeStamp / 1000;
+         passwordChangedAt
+        ).getTime();
+        const changedPasswordTime: number = passwordChangedAtTimeStamp / 1000;
+        console.log(jwtIat, changedPasswordTime,jwtIat < changedPasswordTime);
        return jwtIat < changedPasswordTime;
      }
      return false;
@@ -130,20 +136,20 @@ import { RequestAd } from './requestModel';
        return verifyToken;
      }
    }
-   async checkPassword(givenPass:string, documentPass:string) {
-    //  console.log(this);
+   async checkPassword(givenPass: string, documentPass: string) {
+     //  console.log(this);
      return await compare(givenPass, documentPass);
-   };
+   }
 
-  @BeforeUpdate
-  @BeforeCreate
-  static async hashingPassword(user:User) {
-    user.password = await hash(user.password, 12);
-  };
-@HasMany(()=>Ads)
-ads!: Ads[];
-@HasMany(()=>RequestAd)
-requestAd!: RequestAd[];
+   @BeforeUpdate
+   @BeforeCreate
+   static async hashingPassword(user: User) {
+     user.password = await hash(user.password, 12);
+   }
+   @HasMany(() => Ads)
+   ads!: Ads[];
+   @HasMany(() => RequestAd)
+   requestAd!: RequestAd[];
  }
 
 /*

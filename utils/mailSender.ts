@@ -1,6 +1,6 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer"
 
-const sendEmail = async (opt) => {
+export const sendEmail = async (opt:MailOptions) => {
   // console.log("You are In Function with the ", opt);
 
   const transport = nodemailer.createTransport({
@@ -30,4 +30,4 @@ const sendEmail = async (opt) => {
   await transport.sendMail(mailOpts);
 };
 
-module.exports = sendEmail;
+// module.exports = sendEmail;

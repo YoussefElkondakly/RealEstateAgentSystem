@@ -4,7 +4,8 @@ import {
   Model,
   IsFloat,
   BelongsTo,
-  DataType,BeforeUpdate,BeforeCreate,ForeignKey
+  DataType,BeforeUpdate,BeforeCreate,ForeignKey,
+  BeforeValidate
 } from "sequelize-typescript";
 import { User } from "./usermodel";
 @Table
@@ -76,6 +77,7 @@ export class RequestAd extends Model {
 
   @BeforeUpdate
   @BeforeCreate
+  @BeforeValidate
   static makeUpperCase(instance: RequestAd) {
     instance.propertyType = instance.propertyType.toLocaleUpperCase();
   }

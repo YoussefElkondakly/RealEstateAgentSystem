@@ -1,12 +1,10 @@
-import { RequestHandler } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
+import { AppError } from "./appError";
 
-//this for reducing the try Catch calling
-export const catchAsync = function (fn: RequestHandler|Promise){
-  return (req,res,next)=>fn(req,res,next).catch
-  // const shit: RequestHandler = (req, res, next):Promise =>
-  //   fn(req, res, next).catch((err) => next(err));
-  // return shit;
+
+export const catchAsync =  function (fn: Function |RequestHandler){
+  return (req:Request,res:Response,next:NextFunction)=>fn(req,res,next).catch((err:AppError)=>next(err))
+
 };
 
 
-//passing async function with type Request Handler

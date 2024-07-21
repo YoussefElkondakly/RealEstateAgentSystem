@@ -17,7 +17,7 @@ typeof process.env.DB_POSTGRES === "string"
     const sequelize = new Sequelize(postgres);
     sequelize.addModels([Ads,User,RequestAd]);
     sequelize.sync(
-      // {force:true}
+      // {force:true}x  
     ).then(()=>{
       console.log('PostGres DB connection successful\n')
       app.listen(port, () => {

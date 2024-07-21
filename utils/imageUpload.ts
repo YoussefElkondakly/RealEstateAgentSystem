@@ -1,10 +1,11 @@
-const multer = require("multer");
-const AppError = require("./appError");
-
+import {default as multer}from 'multer'
+import { AppError } from "./appError";
+import { Request } from 'express';
 // FIXME I Have A problem while validating inputs the photo is saved on the server
-exports.uploadPhoto = function (category,req) {
+export const uploadPhoto = function (category:string,) {
     const multerStorage = multer.diskStorage({
       destination: (req, file, cb) => {
+       
         req.category = category;
         cb(null, `uploads/${category}`);
       },
@@ -14,11 +15,15 @@ exports.uploadPhoto = function (category,req) {
         cb(null, `${category}-${Date.now()}.${ext}`);
       },
     });
-    const fileFilter = (req, file, cb) => {
+    const fileFilter = (
+      req: Request,
+      file: Express.Multer.File,
+      cb: multer.FileFilterCallback
+    ) => {
       if (file.mimetype.startsWith("image")) {
         cb(null, true);
       } else {
-        cb(new AppError("This Is Not An Image", 403), false);
+        cb(null , false);
       }
     };
     const upload = multer({
